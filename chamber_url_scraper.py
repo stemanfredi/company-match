@@ -176,7 +176,6 @@ class ChamberURLScraper:
                 "legal_form": legal_form,
                 "tax_code": tax_code,
                 "chamber_url": chamber_url,
-                "status": "found" if chamber_url else "not_found",
             }
             results.append(result)
 
@@ -194,7 +193,7 @@ class ChamberURLScraper:
             print("No results to save")
             return
 
-        fieldnames = ["company_name", "legal_form", "tax_code", "chamber_url", "status"]
+        fieldnames = ["company_name", "legal_form", "tax_code", "chamber_url"]
 
         try:
             with open(output_file, "w", newline="", encoding="utf-8") as file:
@@ -205,7 +204,7 @@ class ChamberURLScraper:
             print(f"\nResults saved to {output_file}")
 
             # Print summary
-            found_count = sum(1 for r in results if r["status"] == "found")
+            found_count = sum(1 for r in results if r["chamber_url"])
             print(f"Summary: {found_count}/{len(results)} URLs found")
 
         except Exception as e:

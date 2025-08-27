@@ -173,22 +173,22 @@ python company_website_finder.py \
 ### Chamber URLs (`chamber_urls.csv`)
 
 ```csv
-company_name,legal_form,tax_code,chamber_url,status
-SIELTE,SPA,00941910788,https://www.ufficiocamerale.it/...,found
+company_name,legal_form,tax_code,chamber_url
+EXAMPLE COMPANY,SPA,12345678901,https://www.ufficiocamerale.it/...
 ```
 
 ### Company Details (`companies_detailed.csv`)
 
 ```csv
 company_name,legal_form,tax_code,vat_number,address,pec_email,latest_revenue,latest_revenue_year,latest_employees,latest_employees_year
-SIELTE,SPA,00941910788,00941910788,"Via Roma 1, Milano",direzione@pec.sielte.it,50000000,2023,250,2023
+EXAMPLE COMPANY,SPA,12345678901,12345678901,"Via Roma 1, Milano",direzione@pec.example.it,50000000,2023,250,2023
 ```
 
 ### Company Websites (`company_websites.csv`)
 
 ```csv
 company_name,legal_form,tax_code,official_website,confidence_score,validation_status,page_title
-SIELTE,SPA,00941910788,https://www.sielte.it/,100,validated,"SIELTE - Digital Solutions"
+EXAMPLE COMPANY,SPA,12345678901,https://www.example.it/,100,validated,"Example Company - Digital Solutions"
 ```
 
 ## Validation Logic

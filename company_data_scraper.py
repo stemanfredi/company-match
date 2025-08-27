@@ -227,10 +227,8 @@ class CompanyDataScraper:
             print(f"Error: {input_file} not found")
             return []
 
-        # Filter only companies with found URLs
-        companies = [
-            c for c in companies if c.get("status") == "found" and c.get("chamber_url")
-        ]
+        # Filter only companies with URLs
+        companies = [c for c in companies if c.get("chamber_url")]
 
         if limit:
             companies = companies[:limit]
