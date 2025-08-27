@@ -1,0 +1,67 @@
+# Company Scraper Configuration
+# ================================
+
+# Data Sources
+data_sources:
+  chamber_of_commerce_url: "https://www.ufficiocamerale.it"
+  search_engine_url: "https://www.startpage.com/sp/search"
+
+# File Paths
+file_paths:
+  input_file: "companies_base.csv"
+  chamber_urls_output: "chamber_urls.csv"
+  detailed_data_output: "companies_detailed.csv"
+  websites_output: "company_websites.csv"
+
+# Scraping Settings
+scraping:
+  # Request delays (seconds)
+  request_delay: 2
+  validation_delay: 1
+  company_delay: 3
+
+  # Timeouts (seconds)
+  page_timeout: 15
+  selenium_timeout: 10
+
+  # Limits
+  max_candidate_websites: 8
+  max_retries: 3
+
+  # Browser settings
+  headless_mode: true
+  browser_width: 1920
+  browser_height: 1080
+
+# Validation Settings
+validation:
+  confidence_threshold: 50
+  footer_score_cap: 60
+  name_match_weight: 15
+  max_name_match_score: 45
+  tax_code_score: 25
+  registration_pattern_weight: 10
+  max_registration_score: 30
+  business_keyword_score: 10
+  contact_info_weight: 8
+  max_contact_score: 20
+
+# Search Settings
+search:
+  excluded_domains:
+    - "startpage.com"
+    - "google.com"
+    - "bing.com"
+    - "yahoo.com"
+    - "facebook.com"
+    - "linkedin.com"
+    - "twitter.com"
+    - "instagram.com"
+    - "wikipedia.org"
+    - "youtube.com"
+    - "amazon.com"
+    - "ebay.com"
+    - "ufficiocamerale.it"
+    - "registroimprese.it"
+    - "infocamere.it"
+    - "paginegialle.it"
