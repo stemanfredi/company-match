@@ -4,3 +4,8 @@ selenium>=4.15.0
 webdriver-manager>=4.0.0
 pyyaml>=6.0.0
 lxml>=4.9.0
+# Step 5: Chamber Document Analysis
+PyPDF2>=3.0.0
+PyMuPDF>=1.23.0
+# Step 6: Intelligent Chatbot
+pathlib>=1.0.0

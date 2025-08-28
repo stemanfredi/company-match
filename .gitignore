@@ -1,6 +1,18 @@
-# Data files
+# Data files - exclude all generated data
+visure/
 *.csv
-company_intelligence.json
+*.json
+!industry_classification.json
+!config.yml
+*.txt
+*.md
+!README.md
+!PROJECT_REVIEW.md
+
+# Test and analysis files (these are specifically excluded even though *.json is excluded above)
+chatbot_test_results.json
+chatbot_data_access_analysis.md
+unified_data_report.txt
 
 # Python
 __pycache__/

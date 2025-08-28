@@ -1,218 +1,710 @@
 {
-  "Networking": [
-    "LAN/WLAN di campus",
-    "Data center networking (fabric/SDN)",
-    "WAN/SD-WAN",
-    "Cloud networking",
-    "Network automation/orchestration",
-    "Network performance/monitoring",
-    "Load balancing",
-    "DNS/DHCP services"
-  ],
-  "Connettività e Telecomunicazioni": [
-    "Accesso fisso: FTTH/DSL/HFC",
-    "Mobile: 4G/5G RAN",
-    "Core di rete: EPC/5GC/IMS",
-    "Private LTE/5G",
-    "IoT LPWAN: NB-IoT, LTE-M, LoRaWAN, Sigfox",
-    "Satellitare/Non-terrestrial (NTN)",
-    "Edge/MEC",
-    "Fiber optic infrastructure",
-    "Microwave/radio links",
-    "Submarine cables"
-  ],
-  "Mobile": [
-    "Gestione dispositivi: MDM/UEM/EMM",
-    "Sviluppo e distribuzione app mobile",
-    "Mobile security",
-    "Mobile payments/wallet",
-    "Mobile analytics",
-    "Cross-platform development",
-    "Mobile testing",
-    "App store optimization"
-  ],
-  "IoT ed Edge": [
-    "Piattaforme IoT e device management",
-    "Industrial IoT (IIoT)/OT",
-    "Smart home/building",
-    "Smart city",
-    "Connected vehicle/telematica",
-    "Asset tracking/RTLS",
-    "Sensori/attuatori, gateway",
-    "Edge computing, digital twin",
-    "Predictive maintenance",
-    "Environmental monitoring"
-  ],
-  "Sicurezza fisica": [
-    "Videosorveglianza (CCTV, VMS)",
-    "Controllo accessi, biometria",
-    "Rilevazione intrusioni/allarmi",
-    "Sicurezza perimetrale",
-    "PSIM/Command & Control",
-    "Rilevazione incendi",
-    "Droni/robot per sicurezza",
-    "Metal detection",
-    "Explosive detection"
-  ],
-  "Cybersecurity": [
-    "Network security (FW/NGFW, IDS/IPS, NDR)",
-    "Endpoint/workload security (EPP/EDR/XDR)",
-    "Cloud security (CSPM, CWPP, CNAPP)",
-    "Application security (SAST/DAST/SCA, RASP)",
-    "IAM/PAM/MFA/SSO, zero trust",
-    "Email/Web security",
-    "Data security (DLP, cifratura, KMS)",
-    "OT/ICS security",
-    "SIEM/SOAR/Threat intelligence",
-    "GRC, privacy e compliance",
-    "Incident response/MDR",
-    "Penetration testing",
-    "Security awareness training"
-  ],
-  "Cloud e Data Center": [
-    "IaaS/PaaS/SaaS",
-    "Private/hybrid cloud",
-    "Virtualizzazione/compute",
-    "Container/Kubernetes",
-    "Storage/backup/DR",
-    "Data center facilities (power/cooling)",
-    "FinOps/costi cloud",
-    "Serverless computing",
-    "Multi-cloud management"
-  ],
-  "Collaboration e Comunicazioni": [
-    "UC/UCaaS, messaggistica/team collaboration",
-    "Videoconferenza/meeting rooms",
-    "Voce/VoIP, Contact Center/CCaaS",
-    "Email/calendaring",
-    "File sharing/EFSS, CPaaS",
-    "Digital workplace",
-    "Social collaboration",
-    "Webinar platforms"
-  ],
-  "DevOps e IT Operations": [
-    "CI/CD, release, artifact/VCS",
-    "Infrastructure as Code/automation",
-    "Monitoring/APM/logs/traces",
-    "ITSM/ITOM, CMDB/asset",
-    "SRE/incident management",
-    "Test/QA",
-    "Configuration management",
-    "Performance optimization"
-  ],
-  "Dati, Analytics e AI": [
-    "Integrazione/ETL-ELT, data pipelines",
-    "Data lake/lakehouse/data warehouse",
-    "BI/visual analytics",
-    "Streaming/event processing",
-    "MLOps/feature store",
-    "GenAI/LLM platform",
-    "Data governance/catalog/quality",
-    "Computer vision, NLP",
-    "Predictive analytics",
-    "Real-time analytics"
-  ],
-  "Software e Applicazioni Enterprise": [
-    "ERP/SCM",
-    "CRM/marketing automation",
-    "HR/Workforce management",
-    "E-commerce/POS",
-    "BPM/RPA/low-code",
-    "CMS/portali",
-    "GIS/location intelligence",
-    "Document management",
-    "Project management",
-    "Financial software"
-  ],
-  "Media, CDN e Streaming": [
-    "CDN/edge delivery",
-    "OTT/streaming live e VOD",
-    "Transcoding/DRM",
-    "AdTech",
-    "Content management",
-    "Video analytics",
-    "Broadcasting equipment"
-  ],
-  "AR/VR/XR": [
-    "Dispositivi e piattaforme",
-    "Remote assist/field service",
-    "Training/simulazione",
-    "Content creation",
-    "Metaverse platforms",
-    "3D modeling",
-    "Haptic technology"
-  ],
-  "Hardware e Dispositivi": [
-    "PC/notebook/workstation",
-    "Periferiche/stampa",
-    "Rugged/industrial, embedded",
-    "POS/handheld/barcode",
-    "Servers/storage hardware",
-    "Networking equipment",
-    "Semiconductor/chips"
-  ],
-  "Servizi": [
-    "Consulenza e integrazione",
-    "Managed services/MSP",
-    "SOC/MSSP/NOC",
-    "Outsourcing/BPO",
-    "Supporto/formazione",
-    "System integration",
-    "Technical support",
-    "Professional services"
-  ],
-  "Automazione Industriale": [
-    "PLC/SCADA systems",
-    "Industrial robotics",
-    "Process automation",
-    "Factory automation",
-    "Quality control systems",
-    "Manufacturing execution systems (MES)",
-    "Industrial communication protocols"
-  ],
-  "Energia e Utilities": [
-    "Smart grid technology",
-    "Energy management systems",
-    "Renewable energy solutions",
-    "Power monitoring",
-    "Utility automation",
-    "Smart meters",
-    "Grid optimization"
-  ],
-  "Trasporti e Logistica": [
-    "Fleet management",
-    "Transportation management systems",
-    "Warehouse automation",
-    "Supply chain optimization",
-    "Vehicle tracking",
-    "Route optimization",
-    "Logistics software"
-  ],
-  "Sanità e Life Sciences": [
-    "Healthcare IT systems",
-    "Medical devices",
-    "Telemedicine platforms",
-    "Electronic health records",
-    "Medical imaging",
-    "Laboratory information systems",
-    "Pharmaceutical software"
-  ],
-  "Fintech e Payments": [
-    "Payment processing",
-    "Digital banking",
-    "Cryptocurrency/blockchain",
-    "Risk management",
-    "Regulatory compliance",
-    "Trading platforms",
-    "Insurance technology"
-  ],
-  "Retail e E-commerce": [
-    "Point of sale systems",
-    "Inventory management",
-    "Customer analytics",
-    "Omnichannel platforms",
-    "Digital marketing",
-    "Supply chain management",
-    "Loyalty programs"
-  ]
+  "taxonomy_version": "2.0",
+  "last_updated": "2025-08-28",
+  "description": "Comprehensive industry classification for Italian companies based on actual market analysis",
+  "categories": {
+    "information_technology": {
+      "name": "Information Technology & Software",
+      "description": "Software development, system integration, IT consulting and digital solutions",
+      "subcategories": {
+        "software_development": {
+          "name": "Software Development",
+          "keywords": [
+            "software",
+            "sviluppo",
+            "applicazioni",
+            "app",
+            "programming",
+            "coding"
+          ],
+          "technologies": [
+            "Java",
+            "Python",
+            ".NET",
+            "JavaScript",
+            "React",
+            "Angular",
+            "Node.js"
+          ],
+          "business_models": [
+            "custom_software",
+            "saas",
+            "consulting",
+            "outsourcing"
+          ]
+        },
+        "system_integration": {
+          "name": "System Integration",
+          "keywords": [
+            "integrazione",
+            "sistemi",
+            "enterprise",
+            "erp",
+            "crm",
+            "integration"
+          ],
+          "technologies": [
+            "API",
+            "middleware",
+            "ESB",
+            "microservices",
+            "cloud"
+          ],
+          "business_models": [
+            "system_integrator",
+            "consulting",
+            "managed_services"
+          ]
+        },
+        "cybersecurity": {
+          "name": "Cybersecurity",
+          "keywords": [
+            "sicurezza",
+            "cyber",
+            "security",
+            "protezione",
+            "firewall",
+            "antivirus"
+          ],
+          "technologies": [
+            "SIEM",
+            "SOC",
+            "penetration_testing",
+            "vulnerability_assessment"
+          ],
+          "business_models": [
+            "managed_security",
+            "consulting",
+            "security_products"
+          ]
+        },
+        "cloud_services": {
+          "name": "Cloud Services",
+          "keywords": [
+            "cloud",
+            "aws",
+            "azure",
+            "google",
+            "hosting",
+            "saas",
+            "paas",
+            "iaas"
+          ],
+          "technologies": [
+            "AWS",
+            "Azure",
+            "Google Cloud",
+            "Docker",
+            "Kubernetes"
+          ],
+          "business_models": [
+            "cloud_provider",
+            "migration_services",
+            "managed_cloud"
+          ]
+        },
+        "data_analytics": {
+          "name": "Data Analytics & AI",
+          "keywords": [
+            "data",
+            "analytics",
+            "intelligenza artificiale",
+            "ai",
+            "machine learning",
+            "big data"
+          ],
+          "technologies": [
+            "Python",
+            "R",
+            "Tableau",
+            "Power BI",
+            "TensorFlow",
+            "PyTorch"
+          ],
+          "business_models": [
+            "data_consulting",
+            "ai_solutions",
+            "analytics_platform"
+          ]
+        }
+      }
+    },
+    "telecommunications": {
+      "name": "Telecommunications & Networking",
+      "description": "Network infrastructure, telecommunications services, and connectivity solutions",
+      "subcategories": {
+        "network_infrastructure": {
+          "name": "Network Infrastructure",
+          "keywords": [
+            "rete",
+            "network",
+            "infrastruttura",
+            "router",
+            "switch",
+            "networking"
+          ],
+          "technologies": [
+            "Cisco",
+            "Juniper",
+            "fiber_optic",
+            "5G",
+            "LTE",
+            "MPLS"
+          ],
+          "business_models": [
+            "infrastructure_provider",
+            "network_services",
+            "consulting"
+          ]
+        },
+        "telecommunications_services": {
+          "name": "Telecommunications Services",
+          "keywords": [
+            "telecomunicazioni",
+            "telecom",
+            "telefonia",
+            "voip",
+            "comunicazioni"
+          ],
+          "technologies": [
+            "VoIP",
+            "SIP",
+            "PBX",
+            "unified_communications",
+            "video_conferencing"
+          ],
+          "business_models": [
+            "telecom_operator",
+            "service_provider",
+            "reseller"
+          ]
+        },
+        "fiber_optic": {
+          "name": "Fiber Optic & Cable Installation",
+          "keywords": [
+            "fibra ottica",
+            "cablaggio",
+            "installazione",
+            "posa",
+            "ftth",
+            "fttc"
+          ],
+          "technologies": [
+            "fiber_optic",
+            "FTTH",
+            "FTTC",
+            "cable_installation",
+            "splicing"
+          ],
+          "business_models": [
+            "installation_services",
+            "infrastructure_deployment",
+            "maintenance"
+          ]
+        },
+        "wireless_solutions": {
+          "name": "Wireless Solutions",
+          "keywords": ["wireless", "wifi", "radio", "antenna", "mobile", "5g"],
+          "technologies": [
+            "WiFi",
+            "5G",
+            "LTE",
+            "radio_frequency",
+            "antenna_systems"
+          ],
+          "business_models": [
+            "wireless_provider",
+            "equipment_supplier",
+            "installation"
+          ]
+        }
+      }
+    },
+    "industrial_automation": {
+      "name": "Industrial Automation",
+      "description": "Automation systems, control technologies, and industrial IoT solutions for manufacturing and process industries",
+      "subcategories": {
+        "process_automation": {
+          "name": "Process Automation",
+          "keywords": [
+            "automazione",
+            "controllo",
+            "processo",
+            "scada",
+            "plc",
+            "hmi"
+          ],
+          "technologies": [
+            "PLC",
+            "SCADA",
+            "HMI",
+            "DCS",
+            "MES",
+            "industrial_iot"
+          ],
+          "business_models": [
+            "system_integrator",
+            "automation_consulting",
+            "maintenance_services"
+          ],
+          "applications": [
+            "manufacturing",
+            "chemical_processing",
+            "food_beverage",
+            "pharmaceuticals"
+          ]
+        },
+        "robotics": {
+          "name": "Industrial Robotics",
+          "keywords": [
+            "robotica",
+            "robot",
+            "automazione",
+            "manipolatori",
+            "cobot"
+          ],
+          "technologies": [
+            "industrial_robots",
+            "collaborative_robots",
+            "vision_systems",
+            "AI"
+          ],
+          "business_models": [
+            "robotics_integrator",
+            "equipment_supplier",
+            "programming_services"
+          ],
+          "applications": [
+            "assembly",
+            "welding",
+            "painting",
+            "material_handling",
+            "quality_control"
+          ]
+        },
+        "measurement_control": {
+          "name": "Measurement & Control Systems",
+          "keywords": [
+            "misura",
+            "controllo",
+            "strumentazione",
+            "sensori",
+            "calibrazione"
+          ],
+          "technologies": [
+            "sensors",
+            "actuators",
+            "measurement_instruments",
+            "calibration_systems"
+          ],
+          "business_models": [
+            "instrumentation_supplier",
+            "calibration_services",
+            "system_design"
+          ],
+          "applications": [
+            "quality_control",
+            "environmental_monitoring",
+            "safety_systems"
+          ]
+        },
+        "industrial_iot": {
+          "name": "Industrial IoT & Smart Manufacturing",
+          "keywords": [
+            "iot",
+            "industria 4.0",
+            "smart",
+            "connesso",
+            "digitale",
+            "sensori"
+          ],
+          "technologies": [
+            "IoT_platforms",
+            "edge_computing",
+            "digital_twins",
+            "predictive_maintenance"
+          ],
+          "business_models": ["iot_platform", "consulting", "managed_services"],
+          "applications": [
+            "predictive_maintenance",
+            "asset_tracking",
+            "energy_management",
+            "quality_monitoring"
+          ]
+        }
+      }
+    },
+    "construction_infrastructure": {
+      "name": "Construction & Infrastructure",
+      "description": "Construction services, civil engineering, and infrastructure development including specialized works",
+      "subcategories": {
+        "general_construction": {
+          "name": "General Construction",
+          "keywords": [
+            "costruzioni",
+            "edilizia",
+            "cantiere",
+            "edifici",
+            "ristrutturazione"
+          ],
+          "technologies": [
+            "construction_management",
+            "BIM",
+            "project_planning"
+          ],
+          "business_models": [
+            "general_contractor",
+            "construction_services",
+            "project_management"
+          ],
+          "applications": [
+            "residential",
+            "commercial",
+            "industrial",
+            "renovation"
+          ]
+        },
+        "civil_engineering": {
+          "name": "Civil Engineering",
+          "keywords": [
+            "ingegneria civile",
+            "infrastrutture",
+            "ponti",
+            "strade",
+            "opere pubbliche"
+          ],
+          "technologies": [
+            "structural_engineering",
+            "geotechnical",
+            "hydraulic_engineering"
+          ],
+          "business_models": [
+            "engineering_consulting",
+            "infrastructure_development",
+            "public_works"
+          ],
+          "applications": [
+            "roads",
+            "bridges",
+            "tunnels",
+            "water_systems",
+            "public_infrastructure"
+          ]
+        },
+        "excavation_earthworks": {
+          "name": "Excavation & Earthworks",
+          "keywords": [
+            "scavi",
+            "movimento terra",
+            "trivellazioni",
+            "sterri",
+            "sbancamenti"
+          ],
+          "technologies": [
+            "excavation_equipment",
+            "drilling_systems",
+            "earth_moving"
+          ],
+          "business_models": [
+            "excavation_contractor",
+            "drilling_services",
+            "earthworks"
+          ],
+          "applications": [
+            "foundation_preparation",
+            "utility_installation",
+            "site_preparation",
+            "drilling"
+          ]
+        },
+        "specialized_installations": {
+          "name": "Specialized Installations",
+          "keywords": [
+            "installazioni",
+            "impianti",
+            "specializzate",
+            "tecnologiche",
+            "sistemi"
+          ],
+          "technologies": [
+            "specialized_equipment",
+            "technical_installations",
+            "system_integration"
+          ],
+          "business_models": [
+            "specialized_contractor",
+            "installation_services",
+            "technical_consulting"
+          ],
+          "applications": [
+            "technical_systems",
+            "specialized_equipment",
+            "industrial_installations"
+          ]
+        }
+      }
+    },
+    "energy_utilities": {
+      "name": "Energy & Utilities",
+      "description": "Energy production, distribution, utilities management, and renewable energy solutions",
+      "subcategories": {
+        "renewable_energy": {
+          "name": "Renewable Energy",
+          "keywords": [
+            "rinnovabili",
+            "solare",
+            "eolico",
+            "fotovoltaico",
+            "green energy"
+          ],
+          "technologies": [
+            "solar_panels",
+            "wind_turbines",
+            "energy_storage",
+            "smart_grid"
+          ],
+          "business_models": [
+            "energy_producer",
+            "installation_services",
+            "energy_consulting"
+          ],
+          "applications": [
+            "solar_installations",
+            "wind_farms",
+            "energy_storage",
+            "grid_integration"
+          ]
+        },
+        "electrical_systems": {
+          "name": "Electrical Systems",
+          "keywords": [
+            "elettrico",
+            "impianti elettrici",
+            "distribuzione",
+            "quadri",
+            "cabine"
+          ],
+          "technologies": [
+            "electrical_distribution",
+            "power_systems",
+            "control_panels"
+          ],
+          "business_models": [
+            "electrical_contractor",
+            "system_design",
+            "maintenance_services"
+          ],
+          "applications": [
+            "power_distribution",
+            "electrical_installations",
+            "industrial_electrical"
+          ]
+        },
+        "energy_efficiency": {
+          "name": "Energy Efficiency",
+          "keywords": [
+            "efficienza energetica",
+            "risparmio",
+            "audit",
+            "certificazione"
+          ],
+          "technologies": [
+            "energy_management",
+            "efficiency_systems",
+            "monitoring"
+          ],
+          "business_models": [
+            "energy_consulting",
+            "efficiency_services",
+            "esco"
+          ],
+          "applications": [
+            "energy_audits",
+            "efficiency_improvements",
+            "certification"
+          ]
+        }
+      }
+    },
+    "facility_management": {
+      "name": "Facility Management & Services",
+      "description": "Building management, maintenance services, and facility operations",
+      "subcategories": {
+        "building_management": {
+          "name": "Building Management",
+          "keywords": [
+            "facility",
+            "gestione",
+            "edifici",
+            "manutenzione",
+            "servizi"
+          ],
+          "technologies": ["building_automation", "HVAC", "security_systems"],
+          "business_models": [
+            "facility_management",
+            "maintenance_services",
+            "building_operations"
+          ],
+          "applications": [
+            "commercial_buildings",
+            "industrial_facilities",
+            "residential_complexes"
+          ]
+        },
+        "technical_maintenance": {
+          "name": "Technical Maintenance",
+          "keywords": [
+            "manutenzione",
+            "assistenza",
+            "riparazione",
+            "service",
+            "tecnico"
+          ],
+          "technologies": [
+            "maintenance_management",
+            "predictive_maintenance",
+            "service_systems"
+          ],
+          "business_models": [
+            "maintenance_contractor",
+            "technical_services",
+            "support_services"
+          ],
+          "applications": [
+            "equipment_maintenance",
+            "technical_support",
+            "repair_services"
+          ]
+        }
+      }
+    },
+    "consulting_services": {
+      "name": "Consulting & Professional Services",
+      "description": "Business consulting, technical consulting, and professional advisory services",
+      "subcategories": {
+        "business_consulting": {
+          "name": "Business Consulting",
+          "keywords": [
+            "consulenza",
+            "business",
+            "strategia",
+            "management",
+            "advisory"
+          ],
+          "technologies": [
+            "business_analysis",
+            "process_optimization",
+            "strategic_planning"
+          ],
+          "business_models": [
+            "management_consulting",
+            "business_advisory",
+            "strategic_consulting"
+          ],
+          "applications": [
+            "business_strategy",
+            "process_improvement",
+            "organizational_development"
+          ]
+        },
+        "technical_consulting": {
+          "name": "Technical Consulting",
+          "keywords": [
+            "consulenza tecnica",
+            "ingegneria",
+            "progettazione",
+            "technical"
+          ],
+          "technologies": [
+            "technical_design",
+            "engineering_analysis",
+            "project_consulting"
+          ],
+          "business_models": [
+            "technical_consulting",
+            "engineering_services",
+            "design_services"
+          ],
+          "applications": [
+            "technical_design",
+            "engineering_consulting",
+            "project_advisory"
+          ]
+        }
+      }
+    },
+    "healthcare_medical": {
+      "name": "Healthcare & Medical Technology",
+      "description": "Medical devices, healthcare IT, and medical services",
+      "subcategories": {
+        "medical_devices": {
+          "name": "Medical Devices & Equipment",
+          "keywords": [
+            "medicale",
+            "dispositivi",
+            "attrezzature",
+            "sanitario",
+            "ospedale"
+          ],
+          "technologies": [
+            "medical_equipment",
+            "diagnostic_systems",
+            "therapeutic_devices"
+          ],
+          "business_models": [
+            "medical_supplier",
+            "equipment_manufacturer",
+            "healthcare_services"
+          ],
+          "applications": [
+            "hospitals",
+            "clinics",
+            "medical_facilities",
+            "healthcare_providers"
+          ]
+        },
+        "healthcare_it": {
+          "name": "Healthcare IT",
+          "keywords": [
+            "sanità digitale",
+            "healthcare",
+            "telemedicina",
+            "cartella clinica"
+          ],
+          "technologies": [
+            "healthcare_software",
+            "telemedicine",
+            "medical_records",
+            "health_analytics"
+          ],
+          "business_models": [
+            "healthcare_software",
+            "digital_health",
+            "medical_it"
+          ],
+          "applications": [
+            "hospital_management",
+            "patient_care",
+            "medical_analytics",
+            "telemedicine"
+          ]
+        }
+      }
+    }
+  },
+  "classification_rules": {
+    "primary_classification": {
+      "method": "keyword_matching",
+      "weight_business_description": 0.4,
+      "weight_company_name": 0.2,
+      "weight_website_content": 0.3,
+      "weight_services_offered": 0.1
+    },
+    "confidence_thresholds": {
+      "high_confidence": 0.8,
+      "medium_confidence": 0.6,
+      "low_confidence": 0.4
+    },
+    "fallback_classification": "consulting_services"
+  }
 }

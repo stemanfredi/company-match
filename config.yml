@@ -13,7 +13,9 @@ file_paths:
   detailed_data_output: "companies_detailed.csv"
   websites_output: "company_websites.csv"
   intelligence_output: "company_intelligence.json"
+  chamber_analysis_output: "chamber_analysis.json"
   taxonomy_file: "industry_classification.json"
+  unified_data_output: "unified_company_data.json"
 
 # Scraping Settings
 scraping:
@@ -83,14 +85,48 @@ intelligence:
   ollama_top_p: 0.9
   ollama_timeout: 60
 
-  # Pages to analyze for each website
+# Chamber Analysis Settings (Step 5)
+chamber_analysis:
+  max_content_length: 8000
+  certification_keywords:
+    - "certificazione"
+    - "attestazione"
+    - "qualità"
+    - "quality"
+    - "ambientale"
+    - "environmental"
+    - "sicurezza"
+    - "safety"
+    - "soa"
+    - "iso"
+    - "uni"
+    - "accredia"
+  business_keywords:
+    - "oggetto sociale"
+    - "attività"
+    - "servizi"
+    - "prodotti"
+    - "settore"
+    - "specializzazione"
+
+# Chatbot Settings (Step 6)
+chatbot:
+  max_context_length: 6000
+  response_max_length: 1000
+  enable_dynamic_scraping: true
+  conversation_history_limit: 10
+
+  # Fallback pages to analyze when smart link discovery fails
+  # The scraper first attempts intelligent link discovery from the homepage
+  # using technology-specific scoring. If that fails, it falls back to these
+  # predefined paths as a safety mechanism.
   pages_to_analyze:
-    - "/"
-    - "/about"
-    - "/chi-siamo"
-    - "/azienda"
-    - "/servizi"
-    - "/products"
-    - "/prodotti"
-    - "/contatti"
-    - "/contact"
+    - "/" # Homepage (always analyzed first)
+    - "/about" # English about page
+    - "/chi-siamo" # Italian "who we are" page
+    - "/azienda" # Italian company page
+    - "/servizi" # Italian services page
+    - "/products" # English products page
+    - "/prodotti" # Italian products page
+    - "/contatti" # Italian contact page
+    - "/contact" # English contact page
