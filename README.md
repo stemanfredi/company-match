@@ -272,7 +272,7 @@ See `requirements.txt` for complete dependency list. Key dependencies:
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is provided as-is for educational and research purposes.
 
 ## Disclaimer
 
