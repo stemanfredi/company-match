@@ -105,7 +105,7 @@ The system follows a sequential 7-step process:
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd company-intelligence-pipeline
+cd <project-directory>
 
 # Create virtual environment
 python -m venv .venv
@@ -135,13 +135,13 @@ Execute each step in sequence:
 python chamber_url_scraper.py
 
 # Step 2: Extract Company Details
-python company_data_scraper.py
+python company_data_scraper.py --headless
 
 # Step 3: Find Company Websites
-python company_website_finder.py
+python company_website_finder.py --headless
 
 # Step 4: Analyze Websites
-python company_intelligence_scraper.py
+python company_intelligence_scraper.py --headless
 
 # Step 5: Analyze Chamber Documents
 python chamber_document_analyzer.py
@@ -151,6 +151,30 @@ python create_unified_company_data.py
 
 # Step 7: Start Chatbot
 python intelligent_chatbot.py
+```
+
+### Command Line Options
+
+Most scripts support the following options:
+
+- `--limit N`: Process only the first N companies (useful for testing)
+- `--headless`: Run browser in headless mode (required for containerized environments)
+- `--config PATH`: Use custom configuration file (default: config.yml)
+
+**Examples:**
+
+```bash
+# Process only 5 companies for testing
+python chamber_url_scraper.py --limit 5
+
+# Run in headless mode for production/containers
+python company_data_scraper.py --headless
+
+# Use custom configuration
+python company_intelligence_scraper.py --config my_config.yml
+
+# Combine options
+python company_website_finder.py --limit 10 --headless --config production.yml
 ```
 
 ### Using the Chatbot
