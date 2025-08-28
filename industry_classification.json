@@ -1,0 +1,218 @@
+{
+  "Networking": [
+    "LAN/WLAN di campus",
+    "Data center networking (fabric/SDN)",
+    "WAN/SD-WAN",
+    "Cloud networking",
+    "Network automation/orchestration",
+    "Network performance/monitoring",
+    "Load balancing",
+    "DNS/DHCP services"
+  ],
+  "Connettività e Telecomunicazioni": [
+    "Accesso fisso: FTTH/DSL/HFC",
+    "Mobile: 4G/5G RAN",
+    "Core di rete: EPC/5GC/IMS",
+    "Private LTE/5G",
+    "IoT LPWAN: NB-IoT, LTE-M, LoRaWAN, Sigfox",
+    "Satellitare/Non-terrestrial (NTN)",
+    "Edge/MEC",
+    "Fiber optic infrastructure",
+    "Microwave/radio links",
+    "Submarine cables"
+  ],
+  "Mobile": [
+    "Gestione dispositivi: MDM/UEM/EMM",
+    "Sviluppo e distribuzione app mobile",
+    "Mobile security",
+    "Mobile payments/wallet",
+    "Mobile analytics",
+    "Cross-platform development",
+    "Mobile testing",
+    "App store optimization"
+  ],
+  "IoT ed Edge": [
+    "Piattaforme IoT e device management",
+    "Industrial IoT (IIoT)/OT",
+    "Smart home/building",
+    "Smart city",
+    "Connected vehicle/telematica",
+    "Asset tracking/RTLS",
+    "Sensori/attuatori, gateway",
+    "Edge computing, digital twin",
+    "Predictive maintenance",
+    "Environmental monitoring"
+  ],
+  "Sicurezza fisica": [
+    "Videosorveglianza (CCTV, VMS)",
+    "Controllo accessi, biometria",
+    "Rilevazione intrusioni/allarmi",
+    "Sicurezza perimetrale",
+    "PSIM/Command & Control",
+    "Rilevazione incendi",
+    "Droni/robot per sicurezza",
+    "Metal detection",
+    "Explosive detection"
+  ],
+  "Cybersecurity": [
+    "Network security (FW/NGFW, IDS/IPS, NDR)",
+    "Endpoint/workload security (EPP/EDR/XDR)",
+    "Cloud security (CSPM, CWPP, CNAPP)",
+    "Application security (SAST/DAST/SCA, RASP)",
+    "IAM/PAM/MFA/SSO, zero trust",
+    "Email/Web security",
+    "Data security (DLP, cifratura, KMS)",
+    "OT/ICS security",
+    "SIEM/SOAR/Threat intelligence",
+    "GRC, privacy e compliance",
+    "Incident response/MDR",
+    "Penetration testing",
+    "Security awareness training"
+  ],
+  "Cloud e Data Center": [
+    "IaaS/PaaS/SaaS",
+    "Private/hybrid cloud",
+    "Virtualizzazione/compute",
+    "Container/Kubernetes",
+    "Storage/backup/DR",
+    "Data center facilities (power/cooling)",
+    "FinOps/costi cloud",
+    "Serverless computing",
+    "Multi-cloud management"
+  ],
+  "Collaboration e Comunicazioni": [
+    "UC/UCaaS, messaggistica/team collaboration",
+    "Videoconferenza/meeting rooms",
+    "Voce/VoIP, Contact Center/CCaaS",
+    "Email/calendaring",
+    "File sharing/EFSS, CPaaS",
+    "Digital workplace",
+    "Social collaboration",
+    "Webinar platforms"
+  ],
+  "DevOps e IT Operations": [
+    "CI/CD, release, artifact/VCS",
+    "Infrastructure as Code/automation",
+    "Monitoring/APM/logs/traces",
+    "ITSM/ITOM, CMDB/asset",
+    "SRE/incident management",
+    "Test/QA",
+    "Configuration management",
+    "Performance optimization"
+  ],
+  "Dati, Analytics e AI": [
+    "Integrazione/ETL-ELT, data pipelines",
+    "Data lake/lakehouse/data warehouse",
+    "BI/visual analytics",
+    "Streaming/event processing",
+    "MLOps/feature store",
+    "GenAI/LLM platform",
+    "Data governance/catalog/quality",
+    "Computer vision, NLP",
+    "Predictive analytics",
+    "Real-time analytics"
+  ],
+  "Software e Applicazioni Enterprise": [
+    "ERP/SCM",
+    "CRM/marketing automation",
+    "HR/Workforce management",
+    "E-commerce/POS",
+    "BPM/RPA/low-code",
+    "CMS/portali",
+    "GIS/location intelligence",
+    "Document management",
+    "Project management",
+    "Financial software"
+  ],
+  "Media, CDN e Streaming": [
+    "CDN/edge delivery",
+    "OTT/streaming live e VOD",
+    "Transcoding/DRM",
+    "AdTech",
+    "Content management",
+    "Video analytics",
+    "Broadcasting equipment"
+  ],
+  "AR/VR/XR": [
+    "Dispositivi e piattaforme",
+    "Remote assist/field service",
+    "Training/simulazione",
+    "Content creation",
+    "Metaverse platforms",
+    "3D modeling",
+    "Haptic technology"
+  ],
+  "Hardware e Dispositivi": [
+    "PC/notebook/workstation",
+    "Periferiche/stampa",
+    "Rugged/industrial, embedded",
+    "POS/handheld/barcode",
+    "Servers/storage hardware",
+    "Networking equipment",
+    "Semiconductor/chips"
+  ],
+  "Servizi": [
+    "Consulenza e integrazione",
+    "Managed services/MSP",
+    "SOC/MSSP/NOC",
+    "Outsourcing/BPO",
+    "Supporto/formazione",
+    "System integration",
+    "Technical support",
+    "Professional services"
+  ],
+  "Automazione Industriale": [
+    "PLC/SCADA systems",
+    "Industrial robotics",
+    "Process automation",
+    "Factory automation",
+    "Quality control systems",
+    "Manufacturing execution systems (MES)",
+    "Industrial communication protocols"
+  ],
+  "Energia e Utilities": [
+    "Smart grid technology",
+    "Energy management systems",
+    "Renewable energy solutions",
+    "Power monitoring",
+    "Utility automation",
+    "Smart meters",
+    "Grid optimization"
+  ],
+  "Trasporti e Logistica": [
+    "Fleet management",
+    "Transportation management systems",
+    "Warehouse automation",
+    "Supply chain optimization",
+    "Vehicle tracking",
+    "Route optimization",
+    "Logistics software"
+  ],
+  "Sanità e Life Sciences": [
+    "Healthcare IT systems",
+    "Medical devices",
+    "Telemedicine platforms",
+    "Electronic health records",
+    "Medical imaging",
+    "Laboratory information systems",
+    "Pharmaceutical software"
+  ],
+  "Fintech e Payments": [
+    "Payment processing",
+    "Digital banking",
+    "Cryptocurrency/blockchain",
+    "Risk management",
+    "Regulatory compliance",
+    "Trading platforms",
+    "Insurance technology"
+  ],
+  "Retail e E-commerce": [
+    "Point of sale systems",
+    "Inventory management",
+    "Customer analytics",
+    "Omnichannel platforms",
+    "Digital marketing",
+    "Supply chain management",
+    "Loyalty programs"
+  ]
+}

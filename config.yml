@@ -12,6 +12,8 @@ file_paths:
   chamber_urls_output: "chamber_urls.csv"
   detailed_data_output: "companies_detailed.csv"
   websites_output: "company_websites.csv"
+  intelligence_output: "company_intelligence.json"
+  taxonomy_file: "industry_classification.json"
 
 # Scraping Settings
 scraping:
@@ -65,3 +67,30 @@ search:
     - "registroimprese.it"
     - "infocamere.it"
     - "paginegialle.it"
+
+# Intelligence Settings
+intelligence:
+  # Analysis settings
+  max_pages_per_site: 5
+  content_analysis_timeout: 30
+  classification_confidence_threshold: 0.6
+
+  # Ollama API settings
+  ollama_endpoint: "http://ollama.lan:11434/api/generate"
+  ollama_model: "gemma3:12b"
+  ollama_stream: false
+  ollama_temperature: 0.3
+  ollama_top_p: 0.9
+  ollama_timeout: 60
+
+  # Pages to analyze for each website
+  pages_to_analyze:
+    - "/"
+    - "/about"
+    - "/chi-siamo"
+    - "/azienda"
+    - "/servizi"
+    - "/products"
+    - "/prodotti"
+    - "/contatti"
+    - "/contact"
