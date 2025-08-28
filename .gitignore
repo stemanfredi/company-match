@@ -3,16 +3,10 @@ visure/
 *.csv
 *.json
 !industry_classification.json
-!config.yml
 *.txt
+!requirements.txt
 *.md
 !README.md
-!PROJECT_REVIEW.md
-
-# Test and analysis files (these are specifically excluded even though *.json is excluded above)
-chatbot_test_results.json
-chatbot_data_access_analysis.md
-unified_data_report.txt
 
 # Python
 __pycache__/

@@ -255,12 +255,13 @@ The system includes a comprehensive industry classification taxonomy in `industr
 
 See `requirements.txt` for complete dependency list. Key dependencies:
 
-- `selenium` - Web scraping
+- `selenium` - Web scraping and browser automation
 - `requests` - HTTP requests
 - `beautifulsoup4` - HTML parsing
-- `pandas` - Data processing
 - `pyyaml` - Configuration management
-- `PyPDF2` - PDF processing
+- `PyPDF2` & `PyMuPDF` - PDF document processing
+- `lxml` - XML/HTML parsing
+- `webdriver-manager` - Automatic browser driver management
 
 ## Contributing
 
