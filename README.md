@@ -4,11 +4,10 @@ A comprehensive 7-step pipeline for extracting, analyzing, and providing intelli
 
 ## 🎯 Overview
 
-This project implements a complete company intelligence system that systematically processes Italian companies through multiple data sources to create a comprehensive business intelligence database. The system is designed to work in headless/containerized environments and provides both structured data output and natural language access through an AI-powered chatbot.
+This project implements a complete company intelligence system that systematically processes Italian companies through multiple data sources to create a comprehensive business intelligence database.
 
 ### Key Features
 
-- **Headless Operation**: Fully compatible with Docker and containerized environments
 - **Multi-Source Integration**: Combines official Chamber of Commerce data with web intelligence
 - **AI-Powered Analysis**: Uses Ollama for natural language processing and content analysis
 - **Comprehensive Coverage**: Extracts financial data, certifications, contact information, and business intelligence
