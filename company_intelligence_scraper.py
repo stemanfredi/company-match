@@ -570,8 +570,8 @@ class CompanyIntelligenceScraper:
 
             taxonomy_text = "\n".join(categories_list)
 
-            # Enhanced prompt for multi-technology classification
-            prompt = f"""Analizza il seguente contenuto di un sito web di un'azienda italiana e classificala secondo la tassonomia fornita.
+            # Enhanced prompt for comprehensive multi-category classification
+            prompt = f"""Analizza il seguente contenuto di un sito web di un'azienda italiana e identifica TUTTE le aree industriali in cui opera secondo la tassonomia fornita.
 
 AZIENDA: {company_name}
 
@@ -581,33 +581,53 @@ CONTENUTO SITO WEB:
 TASSONOMIA DISPONIBILE:
 {taxonomy_text}
 
-ISTRUZIONI DETTAGLIATE:
-1. Identifica TUTTE le tecnologie e servizi menzionati nel contenuto
-2. Classifica l'azienda in MULTIPLE categorie se applicabile (non limitarti a una sola)
-3. Fornisci confidence score realistici per ogni categoria identificata
-4. Analizza il focus principale del business e le competenze tecniche
-5. Identifica lo stack tecnologico e i segmenti di mercato serviti
+ISTRUZIONI CRITICHE:
+1. NON limitarti a una sola categoria - identifica TUTTE le aree operative dell'azienda
+2. Cerca evidenze per 15-25 tecnologie/servizi diversi se presenti nel contenuto
+3. Analizza ogni paragrafo per tecnologie, servizi, prodotti, competenze, certificazioni
+4. Includi categorie anche con confidence basso (0.3+) se c'è evidenza testuale
+5. Considera sinonimi, acronimi e terminologie tecniche specifiche
+6. Analizza sia servizi offerti che tecnologie utilizzate internamente
 
-FORMATO RISPOSTA JSON:
+FORMATO RISPOSTA JSON ESTESO:
 {{
-    "primary_category": "categoria_principale",
-    "secondary_categories": ["categoria2", "categoria3"],
-    "technologies": [
+    "all_applicable_categories": [
         {{
             "category": "nome_categoria",
             "confidence": 0.85,
-            "subcategories": ["sub1", "sub2"],
-            "evidence": ["evidenza1", "evidenza2"]
+            "subcategories_found": ["sub1", "sub2", "sub3"],
+            "evidence_keywords": ["keyword1", "keyword2"],
+            "text_evidence": ["frase_dal_contenuto_1", "frase_dal_contenuto_2"],
+            "relevance_score": 0.75
         }}
     ],
-    "confidence_score": 0.85,
-    "matched_keywords": ["keyword1", "keyword2", "keyword3"],
-    "business_focus": "descrizione_focus_aziendale",
-    "technology_stack": ["tech1", "tech2", "tech3"],
-    "market_segments": ["segmento1", "segmento2"],
-    "suggested_new_category": "categoria_se_non_ict"
+    "comprehensive_technology_analysis": {{
+        "total_technologies_identified": 18,
+        "primary_business_areas": ["area1", "area2", "area3"],
+        "secondary_business_areas": ["area4", "area5"],
+        "emerging_areas": ["area6"],
+        "technology_stack": ["tech1", "tech2", "tech3", "tech4", "tech5"],
+        "service_offerings": ["servizio1", "servizio2", "servizio3"],
+        "market_verticals": ["verticale1", "verticale2"],
+        "certifications_mentioned": ["cert1", "cert2"],
+        "partnerships_technologies": ["partner_tech1", "partner_tech2"]
+    }},
+    "business_intelligence": {{
+        "company_size_indicators": "piccola/media/grande",
+        "geographic_scope": "locale/nazionale/internazionale",
+        "business_model": "descrizione_modello",
+        "competitive_advantages": ["vantaggio1", "vantaggio2"],
+        "target_markets": ["mercato1", "mercato2"]
+    }},
+    "confidence_analysis": {{
+        "overall_confidence": 0.82,
+        "content_quality": "alta/media/bassa",
+        "technical_depth": "alta/media/bassa",
+        "coverage_completeness": 0.75
+    }}
 }}
 
+IMPORTANTE: Identifica OGNI possibile area operativa, anche quelle secondarie o di supporto. Un'azienda può operare in 6-12 categorie diverse.
 Rispondi SOLO con JSON valido:"""
 
             # Prepare Ollama request
@@ -640,33 +660,56 @@ Rispondi SOLO con JSON valido:"""
                     json_str = ollama_response[json_start:json_end]
                     classification = json.loads(json_str)
 
-                    # Enhanced validation and normalization
+                    # Enhanced validation and normalization for new format
+                    all_categories = classification.get("all_applicable_categories", [])
+                    tech_analysis = classification.get(
+                        "comprehensive_technology_analysis", {}
+                    )
+                    business_intel = classification.get("business_intelligence", {})
+                    confidence_analysis = classification.get("confidence_analysis", {})
+
+                    # Convert to compatible format while preserving new data
                     normalized_classification = {
-                        "primary_category": classification.get("primary_category"),
-                        "secondary_categories": classification.get(
-                            "secondary_categories", []
+                        "all_applicable_categories": all_categories,
+                        "comprehensive_technology_analysis": tech_analysis,
+                        "business_intelligence": business_intel,
+                        "confidence_analysis": confidence_analysis,
+                        # Legacy format for compatibility
+                        "primary_category": (
+                            all_categories[0]["category"] if all_categories else None
                         ),
-                        "technologies": classification.get("technologies", []),
-                        "confidence_score": float(
-                            classification.get("confidence_score", 0.0)
-                        ),
-                        "matched_keywords": classification.get("matched_keywords", []),
-                        "business_focus": classification.get("business_focus", ""),
-                        "technology_stack": classification.get("technology_stack", []),
-                        "market_segments": classification.get("market_segments", []),
-                        "suggested_new_categories": (
-                            [classification.get("suggested_new_category")]
-                            if classification.get("suggested_new_category")
+                        "secondary_categories": (
+                            [cat["category"] for cat in all_categories[1:6]]
+                            if len(all_categories) > 1
                             else []
+                        ),
+                        "technologies": all_categories,  # Use new comprehensive format
+                        "confidence_score": confidence_analysis.get(
+                            "overall_confidence", 0.0
+                        ),
+                        "matched_keywords": [
+                            kw
+                            for cat in all_categories
+                            for kw in cat.get("evidence_keywords", [])
+                        ],
+                        "business_focus": business_intel.get("business_model", ""),
+                        "technology_stack": tech_analysis.get("technology_stack", []),
+                        "market_segments": tech_analysis.get("market_verticals", []),
+                        "total_categories_found": len(all_categories),
+                        "total_technologies_identified": tech_analysis.get(
+                            "total_technologies_identified", 0
                         ),
                     }
 
                     print(
-                        f"  ✓ Ollama classification: {normalized_classification['primary_category']} (confidence: {normalized_classification['confidence_score']:.2f})"
+                        f"  ✓ Ollama comprehensive analysis: {len(all_categories)} categories found"
                     )
-                    if normalized_classification["technologies"]:
+                    if all_categories:
+                        primary = all_categories[0]["category"]
+                        confidence = all_categories[0].get("confidence", 0.0)
+                        print(f"    Primary: {primary} (confidence: {confidence:.2f})")
                         print(
-                            f"    Technologies detected: {len(normalized_classification['technologies'])}"
+                            f"    Total technologies: {tech_analysis.get('total_technologies_identified', 0)}"
                         )
 
                     return normalized_classification
@@ -779,9 +822,12 @@ Rispondi SOLO con JSON valido:"""
 
         # Enhanced business focus detection
         classification["business_focus"] = self._detect_business_focus(content_lower)
-        classification["technology_stack"] = self._detect_technology_stack(
-            content_lower
-        )
+
+        # Get comprehensive technology stack
+        tech_stack_result = self._detect_technology_stack(content_lower)
+        classification["technology_stack"] = tech_stack_result.get("simple_list", [])
+        classification["comprehensive_technology_stack"] = tech_stack_result
+
         classification["market_segments"] = self._detect_market_segments(content_lower)
 
         return classification
@@ -837,42 +883,173 @@ Rispondi SOLO con JSON valido:"""
         return ""
 
     def _detect_technology_stack(self, content):
-        """Detect technology stack from content"""
-        tech_keywords = [
-            "java",
-            "python",
-            "javascript",
-            "react",
-            "angular",
-            "vue",
-            "docker",
-            "kubernetes",
-            "aws",
-            "azure",
-            "google cloud",
-            "mysql",
-            "postgresql",
-            "mongodb",
-            "redis",
-            "elasticsearch",
-            "linux",
-            "windows",
-            "vmware",
-            "citrix",
-            "microsoft",
-            "cisco",
-            "juniper",
-            "fortinet",
-            "palo alto",
-            "checkpoint",
-        ]
+        """Enhanced comprehensive technology stack detection"""
+        # Expanded technology categories with scoring
+        tech_categories = {
+            # Programming Languages & Frameworks
+            "programming": {
+                "java": ["java", "jvm", "spring", "hibernate"],
+                "python": ["python", "django", "flask", "pandas", "numpy"],
+                "javascript": ["javascript", "js", "node.js", "nodejs"],
+                "react": ["react", "reactjs", "jsx"],
+                "angular": ["angular", "angularjs", "typescript"],
+                "vue": ["vue", "vuejs", "vue.js"],
+                "php": ["php", "laravel", "symfony", "wordpress"],
+                "c#": ["c#", "csharp", ".net", "dotnet", "asp.net"],
+                "c++": ["c++", "cpp"],
+                "go": ["golang", "go"],
+                "rust": ["rust"],
+                "kotlin": ["kotlin"],
+                "swift": ["swift"],
+                "ruby": ["ruby", "rails", "ruby on rails"],
+            },
+            # Cloud & Infrastructure
+            "cloud": {
+                "aws": ["aws", "amazon web services", "ec2", "s3", "lambda"],
+                "azure": ["azure", "microsoft azure"],
+                "google cloud": ["google cloud", "gcp", "google cloud platform"],
+                "docker": ["docker", "containerization"],
+                "kubernetes": ["kubernetes", "k8s", "container orchestration"],
+                "terraform": ["terraform", "infrastructure as code"],
+                "ansible": ["ansible", "automation"],
+                "jenkins": ["jenkins", "ci/cd"],
+                "gitlab": ["gitlab", "git"],
+                "github": ["github"],
+            },
+            # Databases
+            "databases": {
+                "mysql": ["mysql"],
+                "postgresql": ["postgresql", "postgres"],
+                "mongodb": ["mongodb", "mongo"],
+                "redis": ["redis", "cache"],
+                "elasticsearch": ["elasticsearch", "elastic", "elk"],
+                "oracle": ["oracle", "oracle db"],
+                "sql server": ["sql server", "mssql"],
+                "cassandra": ["cassandra"],
+                "neo4j": ["neo4j", "graph database"],
+            },
+            # Operating Systems & Virtualization
+            "systems": {
+                "linux": ["linux", "ubuntu", "centos", "redhat", "debian"],
+                "windows": ["windows", "windows server"],
+                "vmware": ["vmware", "vsphere", "vcenter"],
+                "citrix": ["citrix", "xenapp", "xendesktop"],
+                "hyper-v": ["hyper-v", "hyperv"],
+            },
+            # Networking & Security
+            "networking": {
+                "cisco": ["cisco", "catalyst", "nexus", "asa"],
+                "juniper": ["juniper", "junos"],
+                "fortinet": ["fortinet", "fortigate"],
+                "palo alto": ["palo alto", "paloalto", "pan-os"],
+                "checkpoint": ["checkpoint", "check point"],
+                "f5": ["f5", "big-ip"],
+                "nginx": ["nginx"],
+                "apache": ["apache", "httpd"],
+            },
+            # Business Applications
+            "business": {
+                "sap": ["sap", "sap erp", "sap hana"],
+                "salesforce": ["salesforce", "sfdc"],
+                "microsoft 365": ["microsoft 365", "office 365", "o365"],
+                "sharepoint": ["sharepoint"],
+                "dynamics": ["dynamics", "dynamics 365"],
+                "servicenow": ["servicenow"],
+                "jira": ["jira", "atlassian"],
+                "confluence": ["confluence"],
+            },
+            # Data & Analytics
+            "analytics": {
+                "tableau": ["tableau"],
+                "power bi": ["power bi", "powerbi"],
+                "qlik": ["qlik", "qlikview", "qliksense"],
+                "splunk": ["splunk"],
+                "hadoop": ["hadoop", "big data"],
+                "spark": ["apache spark", "spark"],
+                "kafka": ["kafka", "apache kafka"],
+            },
+            # AI & Machine Learning
+            "ai_ml": {
+                "tensorflow": ["tensorflow"],
+                "pytorch": ["pytorch"],
+                "scikit-learn": ["scikit-learn", "sklearn"],
+                "opencv": ["opencv"],
+                "nlp": ["nlp", "natural language processing"],
+                "machine learning": [
+                    "machine learning",
+                    "ml",
+                    "artificial intelligence",
+                    "ai",
+                ],
+            },
+            # Mobile & Frontend
+            "mobile": {
+                "android": ["android", "kotlin", "java android"],
+                "ios": ["ios", "swift", "objective-c"],
+                "react native": ["react native"],
+                "flutter": ["flutter", "dart"],
+                "xamarin": ["xamarin"],
+            },
+        }
 
-        found_tech = []
-        for tech in tech_keywords:
-            if tech in content and tech not in found_tech:
-                found_tech.append(tech)
+        found_technologies = {}
 
-        return found_tech[:10]
+        # Enhanced detection with context and scoring
+        for category, technologies in tech_categories.items():
+            for tech_name, keywords in technologies.items():
+                score = 0
+                matched_keywords = []
+
+                for keyword in keywords:
+                    # Case-insensitive search with word boundaries
+                    import re
+
+                    pattern = r"\b" + re.escape(keyword.lower()) + r"\b"
+                    matches = len(re.findall(pattern, content.lower()))
+
+                    if matches > 0:
+                        score += matches * (
+                            len(keyword) / 5
+                        )  # Longer keywords get higher scores
+                        matched_keywords.append(keyword)
+
+                if score > 0:
+                    found_technologies[tech_name] = {
+                        "category": category,
+                        "score": score,
+                        "keywords": matched_keywords,
+                        "confidence": min(score / 10.0, 1.0),
+                    }
+
+        # Sort by score and return comprehensive list
+        sorted_tech = sorted(
+            found_technologies.items(), key=lambda x: x[1]["score"], reverse=True
+        )
+
+        # Return detailed technology information
+        comprehensive_stack = []
+        for tech_name, details in sorted_tech[:25]:  # Up to 25 technologies
+            comprehensive_stack.append(
+                {
+                    "technology": tech_name,
+                    "category": details["category"],
+                    "confidence": details["confidence"],
+                    "keywords_found": details["keywords"][:3],  # Top 3 matched keywords
+                    "mentions": int(details["score"]),
+                }
+            )
+
+        # Also return simple list for backward compatibility
+        simple_list = [tech["technology"] for tech in comprehensive_stack[:15]]
+
+        return {
+            "detailed_stack": comprehensive_stack,
+            "simple_list": simple_list,
+            "total_technologies": len(comprehensive_stack),
+            "categories_covered": len(
+                set(tech["category"] for tech in comprehensive_stack)
+            ),
+        }
 
     def _detect_market_segments(self, content):
         """Detect market segments from content"""

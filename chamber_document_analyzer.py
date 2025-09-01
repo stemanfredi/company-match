@@ -106,7 +106,28 @@ class ChamberDocumentAnalyzer:
         try:
             import csv
 
-            companies_file = self.config["file_paths"]["detailed_data_output"]
+            # Try multiple possible file paths
+            possible_files = [
+                self.config["file_paths"].get(
+                    "companies_detailed", "companies_detailed.csv"
+                ),
+                "companies_detailed.csv",
+                "company_websites.csv",
+                "unified_company_data.csv",
+            ]
+
+            companies_file = None
+            for file_path in possible_files:
+                if Path(file_path).exists():
+                    companies_file = file_path
+                    break
+
+            if not companies_file:
+                print(f"Warning: No companies file found, tried: {possible_files}")
+                return {}
+
+            print(f"Loading companies from: {companies_file}")
+
             with open(companies_file, "r", encoding="utf-8") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
@@ -130,22 +151,89 @@ class ChamberDocumentAnalyzer:
                     if row.get("tax_code")
                 )
             )
-            print(f"Loaded {unique_companies} companies for matching")
+            print(
+                f"Loaded {unique_companies} companies for matching from {companies_file}"
+            )
             return companies
 
-        except FileNotFoundError:
-            print(f"Warning: Companies file not found, proceeding without matching")
+        except FileNotFoundError as e:
+            print(f"Warning: Companies file not found: {e}")
+            return {}
+        except Exception as e:
+            print(f"Error loading companies data: {e}")
             return {}
 
     def extract_pdf_text(self, pdf_path: Path) -> str:
         """Extract text from PDF using PyMuPDF for better handling"""
         try:
-            doc = fitz.open(pdf_path)
-            text = ""
-            for page in doc:
-                text += page.get_text()
-            doc.close()
-            return text
+            # Set MuPDF to silent mode
+            import warnings
+
+            warnings.filterwarnings("ignore")
+
+            # Suppress all MuPDF output by setting verbosity to 0
+            if hasattr(fitz, "TOOLS") and hasattr(
+                fitz.TOOLS, "set_small_glyph_heights"
+            ):
+                # Try to set MuPDF to quiet mode if available
+                pass
+
+            # Use subprocess to completely isolate MuPDF warnings
+            import subprocess
+            import tempfile
+
+            # Create a temporary Python script to extract text
+            script_content = f"""
+import fitz
+import sys
+import os
+
+# Redirect all output to devnull
+sys.stderr = open(os.devnull, 'w')
+sys.stdout = open(os.devnull, 'w')
+
+try:
+    doc = fitz.open("{pdf_path}")
+    text = ""
+    for page in doc:
+        text += page.get_text()
+    doc.close()
+    
+    # Write result to a temp file
+    with open("{pdf_path}.txt", "w", encoding="utf-8") as f:
+        f.write(text)
+except:
+    pass
+"""
+
+            with tempfile.NamedTemporaryFile(
+                mode="w", suffix=".py", delete=False
+            ) as temp_script:
+                temp_script.write(script_content)
+                temp_script_path = temp_script.name
+
+            try:
+                # Run the script in complete isolation
+                subprocess.run(
+                    ["python", temp_script_path],
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
+
+                # Read the extracted text
+                text_file = f"{pdf_path}.txt"
+                if os.path.exists(text_file):
+                    with open(text_file, "r", encoding="utf-8") as f:
+                        text = f.read()
+                    os.remove(text_file)
+                    return text
+                else:
+                    raise Exception("Text extraction failed")
+
+            finally:
+                os.unlink(temp_script_path)
+
         except Exception as e:
             print(f"  ✗ Error extracting text from {pdf_path.name}: {e}")
             # Fallback to PyPDF2
@@ -160,53 +248,159 @@ class ChamberDocumentAnalyzer:
                 print(f"  ✗ Fallback extraction also failed: {e2}")
                 return ""
 
-    def preprocess_content(self, text: str) -> str:
-        """Preprocess PDF content for better analysis"""
+    def preprocess_content(self, text: str) -> Dict[str, str]:
+        """Preprocess PDF content with intelligent segmentation"""
         # Clean up text
         text = re.sub(r"\s+", " ", text)  # Normalize whitespace
         text = re.sub(r"[^\w\s\.,;:()\-/]", "", text)  # Remove special chars
 
-        # Limit content length for Ollama
-        max_length = self.config["chamber_analysis"]["max_content_length"]
-        if len(text) > max_length:
-            # Try to find relevant sections
-            cert_keywords = self.config["chamber_analysis"]["certification_keywords"]
-            business_keywords = self.config["chamber_analysis"]["business_keywords"]
+        # Segment content by relevance instead of truncating
+        sections = {
+            "certifications": self._extract_certification_sections(text),
+            "business_activities": self._extract_business_sections(text),
+            "technical_auth": self._extract_technical_sections(text),
+            "financial": self._extract_financial_sections(text),
+            "full_text": text,  # Keep full text for fallback
+        }
 
-            relevant_sections = []
-            lines = text.split("\n")
+        return sections
 
-            for i, line in enumerate(lines):
-                line_lower = line.lower()
-                if any(
-                    keyword in line_lower
-                    for keyword in cert_keywords + business_keywords
-                ):
-                    # Include context around relevant lines
-                    start = max(0, i - 2)
-                    end = min(len(lines), i + 3)
-                    relevant_sections.extend(lines[start:end])
+    def _extract_certification_sections(self, text: str) -> str:
+        """Extract sections related to certifications"""
+        cert_keywords = [
+            "certificazione",
+            "attestazione",
+            "qualità",
+            "quality",
+            "ambientale",
+            "environmental",
+            "sicurezza",
+            "safety",
+            "soa",
+            "iso",
+            "uni",
+            "accredia",
+            "sistema di gestione",
+            "certificato",
+            "emesso da",
+            "data prima emissione",
+            "scadenza",
+            "settore",
+            "norma",
+        ]
 
-            if relevant_sections:
-                text = "\n".join(relevant_sections)
+        return self._extract_sections_by_keywords(text, cert_keywords, context_lines=5)
 
-            # If still too long, truncate
-            if len(text) > max_length:
-                text = text[:max_length] + "..."
+    def _extract_business_sections(self, text: str) -> str:
+        """Extract sections related to business activities"""
+        business_keywords = [
+            "oggetto sociale",
+            "attività",
+            "servizi",
+            "prodotti",
+            "settore",
+            "specializzazione",
+            "ateco",
+            "codice attività",
+            "descrizione attività",
+            "settore di attività",
+            "ramo di attività",
+            "categoria merceologica",
+        ]
 
-        return text
+        return self._extract_sections_by_keywords(
+            text, business_keywords, context_lines=8
+        )
+
+    def _extract_technical_sections(self, text: str) -> str:
+        """Extract sections related to technical authorizations"""
+        tech_keywords = [
+            "abilitazioni",
+            "lettera a",
+            "lettera b",
+            "lettera c",
+            "lettera d",
+            "impiantistiche",
+            "impianti elettrici",
+            "impianti radiotelevisivi",
+            "impianti elettronici",
+            "autorizzazioni tecniche",
+            "abilitazione tecnica",
+        ]
+
+        return self._extract_sections_by_keywords(text, tech_keywords, context_lines=4)
+
+    def _extract_financial_sections(self, text: str) -> str:
+        """Extract sections related to financial data"""
+        financial_keywords = [
+            "capitale sociale",
+            "fatturato",
+            "ricavi",
+            "dipendenti",
+            "addetti",
+            "bilancio",
+            "patrimonio netto",
+            "utile",
+            "perdita",
+            "reddito",
+        ]
+
+        return self._extract_sections_by_keywords(
+            text, financial_keywords, context_lines=3
+        )
+
+    def _extract_sections_by_keywords(
+        self, text: str, keywords: List[str], context_lines: int = 3
+    ) -> str:
+        """Extract text sections containing specific keywords with context"""
+        lines = text.split("\n")
+        relevant_sections = []
+
+        for i, line in enumerate(lines):
+            line_lower = line.lower()
+            if any(keyword in line_lower for keyword in keywords):
+                # Include context around relevant lines
+                start = max(0, i - context_lines)
+                end = min(len(lines), i + context_lines + 1)
+                section = lines[start:end]
+                relevant_sections.extend(section)
+
+        # Remove duplicates while preserving order
+        seen = set()
+        unique_sections = []
+        for line in relevant_sections:
+            if line not in seen:
+                seen.add(line)
+                unique_sections.append(line)
+
+        return "\n".join(unique_sections)
 
     def match_company(self, pdf_text: str, pdf_name: str) -> Optional[Dict]:
-        """Match PDF document to company using name and tax code"""
-        # Extract potential company identifiers from PDF
+        """Match PDF document to company using name and tax code from first page only"""
+        # Extract the first page content only (much more accurate for visure documents)
+        lines = pdf_text.split("\n")
+
+        # Estimate first page content (typically first 100-150 lines in a visura)
+        # Look for page break indicators or use a reasonable line limit
+        first_page_lines = []
+        for i, line in enumerate(lines):
+            # Stop at common page break indicators
+            if i > 50 and any(
+                indicator in line.lower()
+                for indicator in ["pagina 2", "page 2", "pag. 2", "foglio 2"]
+            ):
+                break
+            # Use reasonable limit for first page
+            if i >= 150:
+                break
+            first_page_lines.append(line)
+
+        first_page_content = "\n".join(first_page_lines)
+
+        # Extract identifiers from first page only
         identifiers = []
 
-        # Extract from filename
-        filename_parts = pdf_name.replace("_decrypted.pdf", "").split(" - ")
-        if filename_parts:
-            identifiers.append(filename_parts[0].strip().upper())
-
-        # Extract tax codes from text
+        # Extract tax codes from first page
         tax_code_patterns = [
             r"codice fiscale[:\s]*([0-9]{11})",
             r"partita iva[:\s]*([0-9]{11})",
@@ -215,26 +409,59 @@ class ChamberDocumentAnalyzer:
         ]
 
         for pattern in tax_code_patterns:
-            matches = re.findall(pattern, pdf_text.lower())
+            matches = re.findall(pattern, first_page_content.lower())
             identifiers.extend(matches)
 
-        # Extract company names
+        # Extract company names from first page
         name_patterns = [
-            r"denominazione[:\s]*([A-Z][^.\n]{10,80})",
-            r"ragione sociale[:\s]*([A-Z][^.\n]{10,80})",
+            r"denominazione[:\s]*([A-Z][^.\n]{5,80})",
+            r"ragione sociale[:\s]*([A-Z][^.\n]{5,80})",
+            r"impresa[:\s]*([A-Z][^.\n]{5,80})",
         ]
 
         for pattern in name_patterns:
-            matches = re.findall(pattern, pdf_text, re.IGNORECASE)
+            matches = re.findall(pattern, first_page_content, re.IGNORECASE)
             for match in matches:
                 clean_name = re.sub(r"\s+", " ", match.strip()).upper()
-                identifiers.append(clean_name)
+                # Filter out common false positives
+                if len(clean_name) >= 5 and not any(
+                    exclude in clean_name.lower()
+                    for exclude in [
+                        "del soggetto",
+                        "alla data",
+                        "denuncia",
+                        "progetto",
+                        "mediante",
+                        "organismo",
+                        "attestazione",
+                    ]
+                ):
+                    identifiers.append(clean_name)
 
-        # Try to match with loaded companies
+        # Remove duplicates while preserving order
+        unique_identifiers = []
+        seen = set()
         for identifier in identifiers:
-            if identifier in self.companies_data:
-                return self.companies_data[identifier]
+            if identifier not in seen:
+                seen.add(identifier)
+                unique_identifiers.append(identifier)
 
+        # Debug: Print identifiers being checked
+        print(f"  Debug: Identifiers from first page: {unique_identifiers}")
+        print(
+            f"  Debug: First page content length: {len(first_page_content)} characters"
+        )
+
+        # Try to match with loaded companies - exact match only
+        for identifier in unique_identifiers:
+            if identifier in self.companies_data:
+                matched_company = self.companies_data[identifier]
+                print(
+                    f"  Debug: Match found for '{identifier}' -> {matched_company.get('company_name', 'Unknown')}"
+                )
+                return matched_company
+
+        print(f"  Debug: No match found for any identifier from first page")
         return None
 
     def extract_certifications_direct(self, text: str) -> Dict[str, Any]:
@@ -578,15 +805,24 @@ Rispondi SOLO con JSON valido:"""
 
         print(f"  Company match: {company_name}")
 
-        # Preprocess content
-        processed_content = self.preprocess_content(pdf_text)
-        print(f"  ✓ Preprocessed content: {len(processed_content)} characters")
+        # Preprocess content with intelligent segmentation
+        content_sections = self.preprocess_content(pdf_text)
+        total_processed = sum(
+            len(section)
+            for section in content_sections.values()
+            if isinstance(section, str)
+        )
+        print(
+            f"  ✓ Segmented content: {total_processed} characters across {len(content_sections)} sections"
+        )
 
         # Direct certification extraction
         direct_certifications = self.extract_certifications_direct(pdf_text)
 
-        # AI analysis using Ollama
-        ai_analysis = self.analyze_content_ollama(processed_content, company_name)
+        # AI analysis using Ollama with segmented content
+        ai_analysis = self.analyze_content_ollama(
+            content_sections.get("full_text", "")[:4000], company_name
+        )
 
         # Combine results
         result = {
@@ -597,7 +833,7 @@ Rispondi SOLO con JSON valido:"""
             "direct_extraction": direct_certifications,
             "ai_analysis": ai_analysis,
             "document_length": len(pdf_text),
-            "processed_length": len(processed_content),
+            "processed_length": total_processed,
             "analysis_timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         }
 
@@ -632,12 +868,6 @@ Rispondi SOLO con JSON valido:"""
             try:
                 result = self.analyze_document(pdf_path)
                 results.append(result)
-
-                # Delay between documents
-                if i < len(pdf_files):
-                    delay = 2
-                    print(f"  Waiting {delay}s before next document...")
-                    time.sleep(delay)
 
             except Exception as e:
                 print(f"  ✗ Error processing {pdf_path.name}: {e}")

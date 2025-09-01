@@ -112,13 +112,13 @@ class UnifiedCompanyDataCreator:
         return contacts
 
     def format_certification_data(self, chamber_analysis: Dict) -> Dict:
-        """Format comprehensive certification information"""
+        """Format comprehensive certification information with enhanced structure"""
         if not chamber_analysis:
             return {}
 
         certifications = {}
 
-        # Direct extraction
+        # Direct extraction with enhanced structure
         if chamber_analysis.get("direct_extraction"):
             direct = chamber_analysis["direct_extraction"]
             certifications["direct_extraction"] = {
@@ -132,9 +132,10 @@ class UnifiedCompanyDataCreator:
                     "environmental_registrations", []
                 ),
                 "technical_authorizations": direct.get("technical_authorizations", []),
+                "other_certifications": direct.get("other_certifications", []),
             }
 
-        # AI analysis
+        # AI analysis with enhanced structure
         if chamber_analysis.get("ai_analysis"):
             ai = chamber_analysis["ai_analysis"]
             certifications["ai_analysis"] = ai.get("certifications", {})
@@ -146,6 +147,21 @@ class UnifiedCompanyDataCreator:
             # Add financial data from AI analysis
             if ai.get("financial_data"):
                 certifications["chamber_financial_data"] = ai["financial_data"]
+
+            # Add analysis confidence and insights
+            if ai.get("analysis_confidence"):
+                certifications["analysis_confidence"] = ai["analysis_confidence"]
+            if ai.get("key_insights"):
+                certifications["key_insights"] = ai["key_insights"]
+
+        # Add document processing metadata
+        if chamber_analysis.get("document_length"):
+            certifications["document_metadata"] = {
+                "document_length": chamber_analysis.get("document_length"),
+                "processed_length": chamber_analysis.get("processed_length"),
+                "analysis_timestamp": chamber_analysis.get("analysis_timestamp"),
+                "analysis_status": chamber_analysis.get("analysis_status"),
+            }
 
         return certifications
 
@@ -236,16 +252,74 @@ class UnifiedCompanyDataCreator:
                 }
                 unified_company["data_sources"].append("company_websites")
 
-            # Add intelligence data
+            # Add enhanced intelligence data
             if company_name in intelligence_lookup:
                 intelligence_data = intelligence_lookup[company_name]
+                intelligence_info = intelligence_data.get("intelligence", {})
+
                 unified_company["website_intelligence"] = {
                     "analysis_status": intelligence_data.get("analysis_status", ""),
-                    "company_references": intelligence_data.get("intelligence", {}).get(
+                    "company_references": intelligence_info.get(
                         "company_references", []
                     ),
-                    "classification": intelligence_data.get("intelligence", {}).get(
-                        "classification", {}
+                    # Enhanced multi-category classification
+                    "classification": {
+                        "industry_categories": intelligence_info.get(
+                            "classification", {}
+                        ).get("industry_categories", []),
+                        "primary_category": intelligence_info.get(
+                            "classification", {}
+                        ).get("primary_category", ""),
+                        "confidence_score": intelligence_info.get(
+                            "classification", {}
+                        ).get("confidence_score", 0),
+                        "classification_reasoning": intelligence_info.get(
+                            "classification", {}
+                        ).get("classification_reasoning", ""),
+                    },
+                    # Enhanced technology stack with categories
+                    "technology_stack": {
+                        "programming_languages": intelligence_info.get(
+                            "technology_stack", {}
+                        ).get("programming_languages", []),
+                        "frameworks_libraries": intelligence_info.get(
+                            "technology_stack", {}
+                        ).get("frameworks_libraries", []),
+                        "databases": intelligence_info.get("technology_stack", {}).get(
+                            "databases", []
+                        ),
+                        "cloud_platforms": intelligence_info.get(
+                            "technology_stack", {}
+                        ).get("cloud_platforms", []),
+                        "development_tools": intelligence_info.get(
+                            "technology_stack", {}
+                        ).get("development_tools", []),
+                        "infrastructure": intelligence_info.get(
+                            "technology_stack", {}
+                        ).get("infrastructure", []),
+                        "security_tools": intelligence_info.get(
+                            "technology_stack", {}
+                        ).get("security_tools", []),
+                        "other_technologies": intelligence_info.get(
+                            "technology_stack", {}
+                        ).get("other_technologies", []),
+                        "confidence_score": intelligence_info.get(
+                            "technology_stack", {}
+                        ).get("confidence_score", 0),
+                    },
+                    # Business activities and services
+                    "business_activities": intelligence_info.get(
+                        "business_activities", []
+                    ),
+                    "key_services": intelligence_info.get("key_services", []),
+                    "target_markets": intelligence_info.get("target_markets", []),
+                    # Analysis metadata
+                    "analysis_timestamp": intelligence_data.get(
+                        "analysis_timestamp", ""
+                    ),
+                    "content_length": intelligence_data.get("content_length", 0),
+                    "analysis_confidence": intelligence_info.get(
+                        "analysis_confidence", 0
                     ),
                 }
                 unified_company["data_sources"].append("website_intelligence")
@@ -275,7 +349,7 @@ class UnifiedCompanyDataCreator:
             "companies": unified_companies,
             "metadata": {
                 "total_companies": len(unified_companies),
-                "creation_date": "2025-08-28",
+                "creation_date": "2025-01-09",
                 "data_sources": [
                     "chamber_urls",
                     "companies_detailed",
@@ -283,7 +357,23 @@ class UnifiedCompanyDataCreator:
                     "website_intelligence",
                     "chamber_analysis",
                 ],
-                "structure_version": "1.0",
+                "structure_version": "2.0",
+                "improvements": [
+                    "Enhanced multi-category industry classification (6-12 categories per company)",
+                    "Expanded technology stack detection (25+ technologies across 8 categories)",
+                    "Intelligent PDF content segmentation (vs truncation)",
+                    "First-page-only company matching for accuracy",
+                    "Enhanced certification extraction with AI analysis",
+                    "Comprehensive business activity classification",
+                    "Improved contact information consolidation",
+                    "Document processing metadata tracking",
+                ],
+                "pipeline_coherence": {
+                    "chamber_document_analyzer": "v2.0 - First page matching, intelligent segmentation, no delays",
+                    "company_intelligence_scraper": "v2.0 - Multi-category classification, enhanced tech stack",
+                    "industry_classification": "v2.0 - Human-meaningful categories with keyword expansion",
+                    "unified_data_creator": "v2.0 - Enhanced structure supporting all improvements",
+                },
             },
         }
 
